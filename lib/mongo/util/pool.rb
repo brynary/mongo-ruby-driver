@@ -275,8 +275,12 @@ module Mongo
       loop do
         if (Time.now - start_time) > @timeout
           raise ConnectionTimeoutError, "could not obtain connection within " +
-            "#{@timeout} seconds. The max pool size is currently #{@size}; " +
-            "consider increasing the pool size or timeout."
+            "#{@timeout} seconds. The max pool size is currently #{@size}. " +
+            "TID = #{Thread.current.object_id.to_s(36)} (#{Thread.current.object_id}), " +
+            "socket_for_thread = #{!!@thread_ids_to_sockets[Thread.current.object_id]}, " +
+            "thread_ids_to_sockets.size = #{@thread_ids_to_sockets.size}, " +
+            "socket_for_thread checked_out? = #{@checked_out.include?(@thread_ids_to_sockets[Thread.current.object_id])}" +
+            self.inspect
         end
 
         @connection_mutex.synchronize do
