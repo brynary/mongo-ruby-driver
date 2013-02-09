@@ -278,6 +278,7 @@ module Mongo
             "#{@timeout} seconds. The max pool size is currently #{@size}. " +
             "TID = #{Thread.current.object_id.to_s(36)} (#{Thread.current.object_id}), " +
             "socket_for_thread = #{!!@thread_ids_to_sockets[Thread.current.object_id]}, " +
+            "sockets.size = #{@sockets.size}, " +
             "thread_ids_to_sockets.size = #{@thread_ids_to_sockets.size}, " +
             "socket_for_thread checked_out? = #{@checked_out.include?(@thread_ids_to_sockets[Thread.current.object_id])}" +
             self.inspect
